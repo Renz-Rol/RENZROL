@@ -559,16 +559,23 @@
   const lightboxContent = document.getElementById('lightboxContent');
   const lightboxClose = document.getElementById('lightboxClose');
 
-  document.querySelectorAll('.art-card').forEach(card => {
-    card.addEventListener('click', () => {
-      const clone = card.cloneNode(true);
-      clone.style.cssText = 'width:500px;height:400px;cursor:default;border-radius:8px;';
-      lightboxContent.innerHTML = '';
-      lightboxContent.appendChild(clone);
-      lightbox.classList.add('open');
-    });
-  });
+document.querySelectorAll('.art-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const img = card.querySelector('img');
 
+    const fullImg = document.createElement('img');
+    fullImg.src = img.src;
+    fullImg.style.maxWidth = '90vw';
+    fullImg.style.maxHeight = '90vh';
+    fullImg.style.borderRadius = '10px';
+    fullImg.style.objectFit = 'contain';
+
+    lightboxContent.innerHTML = '';
+    lightboxContent.appendChild(fullImg);
+    lightbox.classList.add('open');
+  });
+});
+  
   lightboxClose.addEventListener('click', () => lightbox.classList.remove('open'));
   lightbox.addEventListener('click', e => {
     if (e.target === lightbox) lightbox.classList.remove('open');
